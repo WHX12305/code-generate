@@ -15,6 +15,11 @@ import java.util.Set;
 public class Table {
 
     /**
+     * 序列化id
+     */
+    private String serialNo;
+
+    /**
      * 作者
      */
     private String author;
@@ -127,5 +132,13 @@ public class Table {
 
     public void setOriginName(String originName) {
         this.originName = originName;
+    }
+
+    public String getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
     }
 }

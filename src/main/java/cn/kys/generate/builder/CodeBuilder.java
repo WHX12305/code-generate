@@ -1,20 +1,18 @@
 package cn.kys.generate.builder;
 
+import cn.hutool.core.util.IdUtil;
 import cn.kys.generate.configration.GenerateProperties;
 import cn.kys.generate.model.Column;
 import cn.kys.generate.model.Table;
-import cn.kys.generate.process.EntityGenerateProcess;
-import cn.kys.generate.process.Generate;
-import cn.kys.generate.process.MapperGenerateProcess;
-import cn.kys.generate.process.MapperXMLGenerateProcess;
+import cn.kys.generate.process.*;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -24,12 +22,14 @@ import java.util.regex.Pattern;
  * @author whx
  * @since 2022/7/6 上午11:48
  */
-public class CodeBuilder {
+public class CodeBuilder implements Serializable {
 
     List<Generate> generates = Arrays.asList(
             new EntityGenerateProcess(),
             new MapperGenerateProcess(),
-            new MapperXMLGenerateProcess());
+            new MapperXMLGenerateProcess(),
+            new DTOGenerateProcess(),
+            new ConstantsGenerateProcess());
     /**
      * 待构建表信息
      */
@@ -106,6 +106,7 @@ public class CodeBuilder {
                         columns.add(column);
                     }
                     table.setColumns(columns);
+                    table.setSerialNo(IdUtil.getSnowflakeNextIdStr());
                     tables.add(table);
                 }
             }

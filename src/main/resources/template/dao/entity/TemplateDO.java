@@ -1,4 +1,6 @@
 package ${basePackage}.dao.entity;
+
+import java.io.Serializable;
 <#list columnPackage as cp>
 import ${cp};
 </#list>
@@ -10,8 +12,9 @@ import ${cp};
  * @author ${author}
  * @since ${dateTime}
  */
-public class ${uName}DO{
+public class ${uName}DO implements Serializable{
 
+    private static final long serialVersionUID = ${serialNo}L;
 <#list columns as column>
     <#if column.desc != "">
     /**

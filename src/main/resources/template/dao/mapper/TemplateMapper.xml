@@ -38,11 +38,11 @@
             <#list columns as column>
             <#if column.type=="String">
             <if test="null != ${column.name} and '' != ${column.name}">
-                AND ${column.name} = ${r"#{"}${column.originName}${r"}"}
+                AND ${column.originName} = ${r"#{"}${column.name}${r"}"}
             </if>
             <#else>
             <if test="null != ${column.name}">
-                AND ${column.name} = ${r"#{"}${column.originName}${r"}"}
+                AND ${column.originName} = ${r"#{"}${column.name}${r"}"}
             </if>
             </#if>
             </#list>
@@ -57,11 +57,11 @@
             <#list columns as column>
             <#if column.type=="String">
             <if test="null != ${column.name} and '' != ${column.name}">
-                ${column.originName}
+                ${column.originName},
             </if>
             <#else>
             <if test="null != ${column.name}">
-                ${column.originName}
+                ${column.originName},
             </if>
             </#if>
             </#list>
