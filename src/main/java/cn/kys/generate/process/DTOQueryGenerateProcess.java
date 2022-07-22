@@ -10,25 +10,25 @@ import java.io.Writer;
 
 /**
  * <p>
- * 常量类生成
+ * service查询条件生成
  * </p>
  *
  * @author whx
- * @since 2022/7/13 上午11:51
+ * @since 2022/7/22 下午4:46
  */
-public class ConstantsGenerateProcess extends GenerateProcess{
+public class DTOQueryGenerateProcess extends GenerateProcess{
     @Override
     public void generate(Table table) throws Exception {
-        Template template = getTemplate(GenerateProperties.getTemplatePath() + constant.replace(".", "/"), "TemplateConstants.java");
-        File file = new File(GenerateProperties.getOutPath() + constant.replace(".", "/"));
+        Template template = getTemplate(GenerateProperties.getTemplatePath() + dtoQuery.replace(".", "/"), "TemplateQuery.java");
+        File file = new File(GenerateProperties.getOutPath() + dtoQuery.replace(".", "/"));
         if(!file.exists()){
             file.mkdirs();
         }
 
         // 创建一个Writer对象，一般创建一FileWriter对象，指定生成的文件名。
         Writer out = new FileWriter(GenerateProperties.getOutPath()
-                + constant.replace(".", "/")
-                + table.getuName() + "Constants.java");
+                + dtoQuery.replace(".", "/")
+                + table.getuName() + "Query.java");
         // 调用模板对象的process方法输出文件。
         template.process(table, out);
         // 关闭流。

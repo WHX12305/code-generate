@@ -10,7 +10,7 @@ import java.io.Writer;
 
 /**
  * <p>
- *
+ * 持久层查询条件生成
  * </p>
  *
  * @author whx

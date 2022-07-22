@@ -1,34 +1,32 @@
 package ${basePackage}.service;
-import ${basePackage}.model.entity.${uName}DO;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import ${basePackage}.model.dto.${uName}DTO;
 
 import java.util.List;
-@Mapper
-public interface ${uName}Mapper {
+
+public interface I${uName}Service {
 
     /**
      * 根据id查询单条
      */
-    ${uName}DO selectOneById(@Param("id") Long id);
+    ${uName}DTO selectOneById(@Param("id") Long id);
 
     /**
      * 根据id列表查询多条
      */
-    List<${uName}DO> selectByIds(List<Long> ids);
+    List<${uName}DTO> selectByIds(List<Long> ids);
 
     /**
      * 条件查询多条
      */
-    List<${uName}DO> selectByCondition(${uName}DO ${name});
+    List<${uName}DTO> selectByCondition(${uName}DTO ${name});
 
     /**
      * 新增一条
      */
-    ${uName}DO insert(${uName}DO ${name});
+    ${uName}DTO insert(${uName}DTO ${name});
 
     /**
      * 根据主键id更新
      */
-    void updateById(${uName}DO ${name});
+    void updateById(${uName}DTO ${name});
 }

@@ -22,18 +22,25 @@ import java.util.*;
  */
 public class CodeBuilder implements Serializable {
 
+    /**
+     * 生成器列表
+     */
     List<Generate> generates = Arrays.asList(
             new EntityGenerateProcess(),
             new MapperGenerateProcess(),
             new MapperXMLGenerateProcess(),
             new DTOGenerateProcess(),
-            new ConstantsGenerateProcess(),
-            new DaoQueryGenerateProcess());
+            new DTOQueryGenerateProcess(),
+            new DaoQueryGenerateProcess(),
+            new ServiceGenerateProcess());
     /**
      * 待构建表信息
      */
     private List<Table> tables;
 
+    /**
+     * 构建入口
+     */
     public void build() {
         try {
             prepare();

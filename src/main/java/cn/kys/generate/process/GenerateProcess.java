@@ -21,8 +21,8 @@ public abstract class GenerateProcess implements Generate{
     protected final static String entity = ".dao.entity.";
     protected final static String daoQuery = ".dao.query.";
     protected final static String mapper = ".dao.mapper.";
-    protected final static String constant = ".model.constant.";
     protected final static String dto = ".model.dto.";
+    protected final static String dtoQuery = ".model.dto.query.";
     protected final static String enums = ".model.enums.";
     /**
      * 获取freemark模板
