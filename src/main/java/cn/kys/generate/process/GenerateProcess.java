@@ -19,6 +19,7 @@ public abstract class GenerateProcess implements Generate{
     protected final static String service = ".service.";
     protected final static String serviceImpl = ".service.impl.";
     protected final static String entity = ".dao.entity.";
+    protected final static String daoQuery = ".dao.query.";
     protected final static String mapper = ".dao.mapper.";
     protected final static String constant = ".model.constant.";
     protected final static String dto = ".model.dto.";

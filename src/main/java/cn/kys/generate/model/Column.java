@@ -45,6 +45,11 @@ public class Column {
      */
     private Boolean isPrimary;
 
+    /**
+     * 是否覆盖索引
+     */
+    private Boolean isIndex;
+
     public String getName() {
         return name;
     }
@@ -99,5 +104,13 @@ public class Column {
 
     public void setOriginName(String originName) {
         this.originName = originName;
+    }
+
+    public Boolean getIndex() {
+        return isIndex;
+    }
+
+    public void setIndex(Boolean index) {
+        isIndex = index;
     }
 }

@@ -1,5 +1,6 @@
 package ${basePackage}.dao.mapper;
 import ${basePackage}.dao.entity.${uName}DO;
+import ${basePackage}.dao.query.${uName}Query;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,12 +21,12 @@ public interface ${uName}Mapper {
     /**
      * 条件查询多条
      */
-    List<${uName}DO> selectByCondition(${uName}DO ${name});
+    List<${uName}DO> selectByCondition(${uName}DaoQuery query);
 
     /**
      * 新增一条
      */
-    ${uName}DO insert(${uName}DO ${name});
+    int insert(${uName}DO ${name});
 
     /**
      * 根据主键id更新

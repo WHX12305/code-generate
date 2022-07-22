@@ -18,7 +18,7 @@
 
     <!--根据id查询单条-->
     <select id="selectByIds" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List"/> FROM ${originName} WHERE id = ${r"#{id}"}
+    SELECT <include refid="Base_Column_List"/> FROM ${originName} WHERE id = ${r"#{id}"} <#if deleteName??>AND ${deleteName} = 0</#if>
     </select>
 
     <!--根据ids查询多条-->
@@ -27,25 +27,21 @@
         <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
             ${r"#{id}"}
         </foreach>
-        )
+        )<#if deleteName??> AND ${deleteName} = 0</#if>
     </select>
 
-    <!--根据id查询单条-->
+    <!--条件查询多条-->
     <select id="selectByCondition" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/> FROM ${originName}
         <where>
-            is_deleted = 0
             <#list columns as column>
-            <#if column.type=="String">
-            <if test="null != ${column.name} and '' != ${column.name}">
-                AND ${column.originName} = ${r"#{"}${column.name}${r"}"}
-            </if>
-            <#else>
+            <#if column.index>
             <if test="null != ${column.name}">
                 AND ${column.originName} = ${r"#{"}${column.name}${r"}"}
             </if>
             </#if>
             </#list>
+            <#if deleteName??>AND ${deleteName} = 0</#if>
         </where>
     </select>
 

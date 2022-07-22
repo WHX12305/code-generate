@@ -1,4 +1,4 @@
-package ${basePackage}.dao.entity;
+package ${basePackage}.query.entity;
 
 import java.io.Serializable;
 <#list columnPackage as cp>
@@ -12,17 +12,20 @@ import ${cp};
  * @author ${author}
  * @since ${dateTime}
  */
-public class ${uName}DO implements Serializable{
+public class ${uName}DaoQuery implements Serializable{
 
     private static final long serialVersionUID = ${serialNo}L;
 <#list columns as column>
-    <#if column.desc != "">
+<#if column.index>
+<#if column.desc != "">
     /**
      * ${column.desc}
      */</#if>
     private ${column.type} ${column.name};
+</#if>
 </#list>
 <#list columns as column>
+<#if column.index>
     <#if column.desc != "">
     /**
      * 获取${column.desc}
@@ -37,5 +40,6 @@ public class ${uName}DO implements Serializable{
     public void set${column.uName}(${column.type} ${column.name}) {
         this.${column.name} = ${column.name};
     }
+</#if>
 </#list>
 }

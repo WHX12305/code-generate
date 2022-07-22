@@ -60,6 +60,11 @@ public class Table {
     private String desc;
 
     /**
+     * 删除字段名称
+     */
+    private String deleteName;
+
+    /**
      * 列路径集合
      */
     private Set<String> columnPackage;
@@ -140,5 +145,13 @@ public class Table {
 
     public void setSerialNo(String serialNo) {
         this.serialNo = serialNo;
+    }
+
+    public String getDeleteName() {
+        return deleteName;
+    }
+
+    public void setDeleteName(String deleteName) {
+        this.deleteName = deleteName;
     }
 }

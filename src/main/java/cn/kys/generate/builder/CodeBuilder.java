@@ -10,9 +10,7 @@ import java.io.Serializable;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -29,7 +27,8 @@ public class CodeBuilder implements Serializable {
             new MapperGenerateProcess(),
             new MapperXMLGenerateProcess(),
             new DTOGenerateProcess(),
-            new ConstantsGenerateProcess());
+            new ConstantsGenerateProcess(),
+            new DaoQueryGenerateProcess());
     /**
      * 待构建表信息
      */
@@ -64,6 +63,7 @@ public class CodeBuilder implements Serializable {
                 String tableName = tableResultSet.getString("TABLE_NAME");
                 //匹配表名
                 if (tableNames.contains(tableName) || tableNames.get(0).equals("all")) {
+
                     String modelName = hump(tableName);
                     Table table = new Table();
                     table.setOriginName(tableName);
@@ -71,6 +71,7 @@ public class CodeBuilder implements Serializable {
                     table.setuName(firstUpper(modelName));
                     table.setBasePackage(GenerateProperties.getBasePackage());
                     table.setAuthor(GenerateProperties.getAuthor());
+                    table.setDeleteName(GenerateProperties.getDeleteName());
                     table.setDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(
@@ -80,8 +81,18 @@ public class CodeBuilder implements Serializable {
                                     + tableName + "'");
                     rs.next();
                     table.setDesc(rs.getString("TABLE_COMMENT"));
-                    rs.close();
-                    stmt.close();
+
+                    //获取索引列
+                    rs = stmt.executeQuery("SHOW INDEX FROM " + tableName);
+                    Set<String> indexCol = new HashSet<>();
+                    while (rs.next()){
+                        String columnNames = rs.getString("Column_name");
+                        String keyName = rs.getString("Key_name");
+                        if (!Objects.equals(keyName, "PRIMARY")){
+                            indexCol.addAll(Arrays.asList(columnNames.split(",")));
+                        }
+                    }
+
                     ResultSet columnSet = metaData.getColumns(null, null, tableName, "%");
                     List<Column> columns = new ArrayList<>();
                     while (columnSet.next()) {
@@ -89,12 +100,19 @@ public class CodeBuilder implements Serializable {
                         String remarks = columnSet.getString("REMARKS");
                         //获取列名
                         String columnName = columnSet.getString("COLUMN_NAME");
+
                         Column column = new Column();
                         if (columnName.equals("id")){
                             column.setPrimary(Boolean.TRUE);
                         }else {
                             column.setPrimary(Boolean.FALSE);
                         }
+                        if (indexCol.contains(columnName)){
+                            column.setIndex(Boolean.TRUE);
+                        }else {
+                            column.setIndex(Boolean.FALSE);
+                        }
+
                         column.setOriginName(columnName);
                         column.setName(hump(columnName));
                         column.setuName(firstUpper(hump(columnName)));
@@ -108,6 +126,9 @@ public class CodeBuilder implements Serializable {
                     table.setColumns(columns);
                     table.setSerialNo(IdUtil.getSnowflakeNextIdStr());
                     tables.add(table);
+
+                    rs.close();
+                    stmt.close();
                 }
             }
         }

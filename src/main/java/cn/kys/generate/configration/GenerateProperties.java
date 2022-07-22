@@ -56,6 +56,11 @@ public class GenerateProperties {
     private static String tableSuffix;
 
     /**
+     * 逻辑删除字段名
+     */
+    private static String deleteName;
+
+    /**
      * 需要生成的表‘,’分割
      */
     private static List<String> tableNames;
@@ -81,6 +86,7 @@ public class GenerateProperties {
             username = props.getProperty("username");
             password = props.getProperty("password");
             tableSuffix = props.getProperty("tableSuffix");
+            deleteName = props.getProperty("deleteName");
             tableNames = Arrays.asList(props.getProperty("tableNames").split(","));
             outPath = GenerateProperties.class.getClassLoader().getResource("").getPath().replace("/target/classes/", "/src/main/resources/out/");
             templatePath = GenerateProperties.class.getClassLoader().getResource("").getPath().replace("/target/classes/", "/src/main/resources/template/");
@@ -128,5 +134,9 @@ public class GenerateProperties {
 
     public static String getTemplatePath() {
         return templatePath;
+    }
+
+    public static String getDeleteName() {
+        return deleteName;
     }
 }
